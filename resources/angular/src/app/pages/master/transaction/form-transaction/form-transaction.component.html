@@ -1,0 +1,56 @@
+<!-- <p>form-buku works!</p> -->
+<form>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 required">User</label>
+                <div class="col-md-8">
+                    <ng-select [(ngModel)]="formModel.id_m_user" [items]="listUser" bindValue="id" bindLabel="nama"
+                        placeholder="Tipe" name="day" appendTo="body"></ng-select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Buku</label>
+                <div class="col-md-8">
+                    <ng-select [(ngModel)]="formModel.id_m_buku" [items]="listBuku" bindValue="id" bindLabel="judul"
+                        placeholder="Tipe" name="day" appendTo="body"></ng-select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Lama Pinjam</label>
+                <div class="col-md-8">
+                    <ng-select [(ngModel)]="formModel.day" [items]="listDay" bindValue="id" bindLabel="nama"
+                        placeholder="Tipe" name="day" appendTo="body"></ng-select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Jumlah</label>
+                <div class="col-md-8">
+                    <input type="number" min="1" max="3" class="form-control" [(ngModel)]="formModel.jumlah"
+                        name="jumlah" id="jumlah">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Status</label>
+                <div class="col-md-8">
+                    <ng-select [(ngModel)]="formModel.status" [items]="status" bindValue="id" bindLabel="nama"
+                        placeholder="Tipe" name="day" appendTo="body"></ng-select>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="btn btn-outline-secondary mr-2" (click)="back()">Daftar Item</button>
+                    <button type="button" class="btn btn-primary" (click)="save()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

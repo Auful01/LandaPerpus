@@ -1,0 +1,69 @@
+<!-- <p>form-buku works!</p> -->
+<form>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-4 required">Nama</label>
+                <div class="col-md-8">
+                    <input [(ngModel)]="formModel.judul" type="text" name="judul" class="form-control"
+                        placeholder="Nama Item / Menu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Pengarang</label>
+                <div class="col-md-8">
+                    <input [(ngModel)]="formModel.pengarang" type="text" name="pengarang" class="form-control"
+                        placeholder="Nama Item / Menu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Penerbit</label>
+                <div class="col-md-8">
+                    <input [(ngModel)]="formModel.penerbit" type="text" name="penerbit" class="form-control"
+                        placeholder="Nama Item / Menu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Tahun Terbit</label>
+                <div class="col-md-8">
+                    <input [(ngModel)]="formModel.tahun_terbit" type="text" name="tahun_terbit" class="form-control"
+                        placeholder="Nama Item / Menu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">ISBN</label>
+                <div class="col-md-8">
+                    <input [(ngModel)]="formModel.isbn" type="text" name="tahun_terbit" class="form-control"
+                        placeholder="Nama Item / Menu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Keterangan</label>
+                <div class="col-md-8">
+                    <input [(ngModel)]="formModel.keterangan" type="text" name="keterangan" class="form-control"
+                        placeholder="Nama Item / Menu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 required">Stok</label>
+                <div class="col-md-8">
+                    <input [(ngModel)]="formModel.stok" type="number" name="stok" class="form-control"
+                        placeholder="Nama Item / Menu">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="btn btn-outline-secondary mr-2" (click)="back()">Daftar Item</button>
+                    <button type="button" class="btn btn-primary" (click)="save()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
