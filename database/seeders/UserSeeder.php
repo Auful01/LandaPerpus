@@ -19,8 +19,13 @@ class UserSeeder extends Seeder
             'id' => 1,
             'nama' => 'Super Admin',
             'akses' => '{
-                "user": {"create": true, "update": true, "delete": true, "view": true}, 
+                "user": {"create": true, "update": true, "delete": true, "view": true},
                 "roles": {"create": true, "update": true, "delete": true, "view": true}
+            }',
+            'id' => 2,
+            'nama' => 'User',
+            'akses' => '{
+                "transaction" : {"view": true}
             }',
         ]);
 
@@ -33,11 +38,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('devGanteng'),
             'updated_security' => date('Y-m-d H:i:s')
         ]);
+        DB::table('user_auth')->insert([
+            'id' => 1,
+            'user_roles_id' => 2,
+            'nama' => 'ZUHRI',
+            'email' => 'zuhri@gmail.com',
+            'password' => Hash::make('zuhri123'),
+            'updated_security' => date('Y-m-d H:i:s')
+        ]);
     }
 }
-
-
-
-
-
-
