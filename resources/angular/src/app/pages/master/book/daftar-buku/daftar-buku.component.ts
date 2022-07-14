@@ -12,9 +12,10 @@ import { BookService } from '../service/book.service';
 })
 export class DaftarBukuComponent implements OnInit {
 
-    listItems: [];
+    listItems: any;
     titleCard: string;
     modelId: number;
+    dtOpt: DataTables.Settings = {}
     isOpenForm: boolean = false;
 
     constructor(
@@ -24,22 +25,53 @@ export class DaftarBukuComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.getItem();
+        // this.getItem();
+        this.dtOpt = {
+            serverSide: true,
+            processing: true,
+            ordering: false,
+            searching: false,
+            pagingType: "full_numbers",
+            ajax: (dataTablesParameter: any, callback) => {
+                // console.log(dataTablesParameter.start);
+
+                const page = parseInt(dataTablesParameter.start) / parseInt(dataTablesParameter.length) + 1;
+                const params = {
+                    nama: '',
+                    page: page,
+                    offset: dataTablesParameter.start,
+                    limit: dataTablesParameter.length,
+
+                };
+
+                this.bookServ.getBooks(params).subscribe((res: any) => {
+                    this.listItems = res.data.list;
+                    console.log(res.data)
+
+
+                    callback({
+                        recordsTotal: res.data.meta.total,
+                        recordsFiltered: res.data.meta.total,
+                        data: []
+                    });
+                });
+            },
+        };
     }
 
     trackByIndex(index: number): any {
         return index;
     }
 
-    getItem() {
-        this.bookServ.getBooks([]).subscribe((res: any) => {
-            console.log(res.data);
+    // getItem() {
+    //     this.bookServ.getBooks([]).subscribe((res: any) => {
+    //         console.log(res.data);
 
-            this.listItems = res.data;
-        }, (err: any) => {
-            console.log(err);
-        });
-    }
+    //         this.listItems = res.data;
+    //     }, (err: any) => {
+    //         console.log(err);
+    //     });
+    // }
 
     showForm(show) {
         this.isOpenForm = show;
@@ -70,7 +102,8 @@ export class DaftarBukuComponent implements OnInit {
             if (result.value) {
                 this.bookServ.deleteBook(userId).subscribe((res: any) => {
                     this.landaService.alertSuccess('Berhasil', res.message);
-                    this.getItem();
+                    // this.getItem();
+
                 }, err => {
                     console.log(err);
                 });

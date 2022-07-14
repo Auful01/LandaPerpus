@@ -1,5 +1,6 @@
 import { Component, OnInit, SimpleChange, EventEmitter, Input, Output } from '@angular/core';
 import { LandaService } from 'src/app/core/services/landa.service';
+import { KategoriService } from '../../kategori/service/kategori.service';
 import { BookService } from '../service/book.service';
 
 @Component({
@@ -13,7 +14,6 @@ export class FormBukuComponent implements OnInit {
     @Output() afterSave = new EventEmitter<boolean>();
     mode: string;
     formModel: {
-        id: number,
         id_m_kategori_buku: number,
         judul: string,
         pengarang: string,
@@ -23,15 +23,17 @@ export class FormBukuComponent implements OnInit {
         keterangan: string,
         stok: number
     };
+    listKategori: any;
     listTipeDetail: any;
 
     constructor(
         private bookServ: BookService,
-        private landaService: LandaService
+        private landaService: LandaService,
+        private catService: KategoriService
     ) { }
 
     ngOnInit(): void {
-
+        this.getKategori();
     }
 
     ngOnChanges(changes: SimpleChange) {
@@ -41,7 +43,6 @@ export class FormBukuComponent implements OnInit {
     emptyForm() {
         this.mode = 'add';
         this.formModel = {
-            id: 0,
             id_m_kategori_buku: 0,
             judul: '',
             pengarang: '',
@@ -67,6 +68,17 @@ export class FormBukuComponent implements OnInit {
             this.mode = 'edit';
             this.getItem(this.itemId);
         }
+    }
+
+    getKategori() {
+        this.catService.getKategoris([]).subscribe((res: any) => {
+            this.listKategori = res.data;
+            console.log(res);
+
+        }, err => {
+            console.log(err);
+        }
+        );
     }
 
     save() {
@@ -96,13 +108,11 @@ export class FormBukuComponent implements OnInit {
         });
     }
 
-    removeDetail(detail, paramIndex) {
-        detail.splice(paramIndex, 1);
-    }
 
     trackByIndex(index: number): any {
         return index;
     }
+
 
     back() {
         this.afterSave.emit();

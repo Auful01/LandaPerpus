@@ -21,27 +21,11 @@
                         <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" ngbDropdownMenu>
                             <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref"
                                 [routerLink]="['/master/users']">User</a>
-                            <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref"
-                                [routerLink]="['/master/customers']">Customer</a>
-                            <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref"
-                                [routerLink]="['/master/items']">Menu</a>
-                            <a class="col dropdown-item side-nav-link-ref">Promo</a>
-                            <a class="col dropdown-item side-nav-link-ref">Diskon</a>
-                            <a class="col dropdown-item side-nav-link-ref">Voucher</a>
+
+
                         </div>
                     </li>
-                    <li class="nav-item dropdown" ngbDropdown>
-                        <a class="nav-link dropdown-toggle arrow-none text-dark" (click)="onMenuClick($event)"
-                            href="javascript: void(0);" id="topnav-components" role="button" ngbDropdownToggle>
-                            Laporan
-                            <div class="arrow-down"></div>
-                        </a>
-                        <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" ngbDropdownMenu>
-                            <a class="col dropdown-item side-nav-link-ref">Penjualan Menu</a>
-                            <a class="col dropdown-item side-nav-link-ref">Penjualan Customer</a>
-                            <a class="col dropdown-item side-nav-link-ref">Rekap Penjualan</a>
-                        </div>
-                    </li>
+
                     <li class="nav-item dropdown" ngbDropdown>
                         <a class="nav-link dropdown-toggle arrow-none text-dark" (click)="onMenuClick($event)"
                             href="javascript: void(0);" id="topnav-components" role="button" ngbDropdownToggle>
@@ -56,19 +40,21 @@
                         </div>
                     </li>
                 </ng-container>
-                <li class="nav-item dropdown" ngbDropdown>
-                    <a class="nav-link dropdown-toggle arrow-none text-dark" (click)="onMenuClick($event)"
-                        href="javascript: void(0);" id="topnav-components" role="button" ngbDropdownToggle>
-                        Transaksiku
-                        <div class="arrow-down"></div>
-                    </a>
-                    <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" ngbDropdownMenu>
-                        <!-- <a class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/book']">Buku</a> -->
-                        <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref"
-                            [routerLink]="['/master/transaksiku']">Transaksiku</a>
-                        <!-- <a class="col dropdown-item side-nav-link-ref">Rekap Penjualan</a> -->
-                    </div>
-                </li>
+                <ng-container *ngIf="userLogin['akses'] != 'Super Admin'">
+                    <li class="nav-item dropdown" ngbDropdown>
+                        <a class="nav-link dropdown-toggle arrow-none text-dark" (click)="onMenuClick($event)"
+                            href="javascript: void(0);" id="topnav-components" role="button" ngbDropdownToggle>
+                            Transaksiku
+                            <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu row" aria-labelledby="topnav-dashboard" ngbDropdownMenu>
+                            <!-- <a class="col dropdown-item side-nav-link-ref" [routerLink]="['/master/book']">Buku</a> -->
+                            <a href="javascript: void(0);" class="col dropdown-item side-nav-link-ref"
+                                [routerLink]="['/master/transaksiku']">Transaksiku</a>
+                            <!-- <a class="col dropdown-item side-nav-link-ref">Rekap Penjualan</a> -->
+                        </div>
+                    </li>
+                </ng-container>
             </ul>
         </div>
 

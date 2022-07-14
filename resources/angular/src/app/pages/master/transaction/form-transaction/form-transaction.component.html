@@ -5,22 +5,24 @@
             <div class="form-group row">
                 <label class="col-md-4 required">User</label>
                 <div class="col-md-8">
+                    <!-- {{log(mode)}} -->
                     <ng-select [(ngModel)]="formModel.id_m_user" [items]="listUser" bindValue="id" bindLabel="nama"
                         placeholder="Tipe" name="day" appendTo="body"></ng-select>
                 </div>
             </div>
-            <div class="form-group row">
+            <!-- <div class="form-group row">
                 <label class="col-md-4 required">Buku</label>
                 <div class="col-md-8">
                     <ng-select [(ngModel)]="formModel.id_m_buku" [items]="listBuku" bindValue="id" bindLabel="judul"
                         placeholder="Tipe" name="day" appendTo="body"></ng-select>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group row">
                 <label class="col-md-4 required">Lama Pinjam</label>
                 <div class="col-md-8">
-                    <ng-select [(ngModel)]="formModel.day" [items]="listDay" bindValue="id" bindLabel="nama"
-                        placeholder="Tipe" name="day" appendTo="body"></ng-select>
+                    <input type="number" class="form-control" [(ngModel)]="formModel.day">
+                    <!-- <ng-select [(ngModel)]="formModel.day" [items]="listDay" bindValue="id" bindLabel="nama"
+                        placeholder="Tipe" name="day" appendTo="body"></ng-select> -->
                 </div>
             </div>
             <div class="form-group row">
@@ -30,14 +32,45 @@
                         name="jumlah" id="jumlah">
                 </div>
             </div>
-            <div class="form-group row">
+            <!-- <div class="form-group row">
                 <label class="col-md-4 required">Status</label>
                 <div class="col-md-8">
                     <ng-select [(ngModel)]="formModel.status" [items]="status" bindValue="id" bindLabel="nama"
                         placeholder="Tipe" name="day" appendTo="body"></ng-select>
                 </div>
-            </div>
+            </div> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th width="90">
+                                    <button type="button" class="btn btn-sm btn-success" (click)="addDetail()">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </th>
+                                <th class="align-middle">Keterangan</th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let val of formModel.buku; index as i; trackBy:trackByIndex">
+                                <td class="align-middle">
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                        (click)="removeDetail(formModel.buku)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <ng-select [(ngModel)]="val.id_m_buku" [items]="listBuku" bindValue="id"
+                                        bindLabel="judul" placeholder="Tipe" name="id_m_buku_{{i}}" appendTo="body">
+                                    </ng-select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
         </div>
 

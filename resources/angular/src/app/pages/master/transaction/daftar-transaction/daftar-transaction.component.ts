@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LandaService } from 'src/app/core/services/landa.service';
 import Swal from 'sweetalert2';
@@ -11,9 +11,11 @@ import { TransactionService } from '../service/transaction.service';
 })
 export class DaftarTransactionComponent implements OnInit {
 
+    @Output() afterSave = new EventEmitter<boolean>();
     listItems: [];
     titleCard: string;
     transaction: number;
+    dtOpt: DataTables.Settings = {}
     isOpenForm: boolean = false;
 
     constructor(
@@ -23,7 +25,39 @@ export class DaftarTransactionComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.getItem();
+        // this.getItem();
+
+        this.dtOpt = {
+            serverSide: true,
+            processing: true,
+            ordering: false,
+            searching: false,
+            pagingType: "full_numbers",
+            ajax: (dataTablesParameter: any, callback) => {
+                console.log(dataTablesParameter.start);
+
+                const page = parseInt(dataTablesParameter.start) / parseInt(dataTablesParameter.length) + 1;
+                const params = {
+                    nama: '',
+                    page: page,
+                    offset: dataTablesParameter.start,
+                    limit: dataTablesParameter.length,
+
+                };
+
+                this.itemService.getTransactions(params).subscribe((res: any) => {
+                    this.listItems = res.data.list;
+                    // console.log(res.data.list)
+
+
+                    callback({
+                        recordsTotal: res.data.meta.total,
+                        recordsFiltered: res.data.meta.total,
+                        data: []
+                    });
+                });
+            },
+        };
     }
 
     trackByIndex(index: number): any {
@@ -82,7 +116,7 @@ export class DaftarTransactionComponent implements OnInit {
     kembalikan(id: any) {
         this.itemService.kembalikan({ 'id': id }).subscribe((res: any) => {
             this.landaService.alertSuccess('Berhasil', res.message);
-            // this.afterSave.emit();
+            this.afterSave.emit();
         }, err => {
             this.landaService.alertError('Mohon Maaf', err.error.errors);
         }

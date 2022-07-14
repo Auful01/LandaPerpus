@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table class="table table-hover" datatable [dtOptions]="dtOpt" data-page-length="5">
                         <thead class="thead-light">
                             <tr>
                                 <td>Judul</td>
@@ -28,7 +28,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let val of listItems; index as i; trackBy:trackByIndex">
+                            <tr *ngFor="let val of listItems; index as i ">
                                 <td class="vertical-middle">{{val.judul}}</td>
                                 <td class="vertical-middle">{{val.pengarang}}</td>
                                 <td class="vertical-middle">{{val.penerbit}}</td>
@@ -62,7 +62,7 @@
                     </h1>
                 </div>
                 <div class="card-body">
-                    <app-form-buku [itemId]="modelId" (afterSave)="showForm(false); getItem()"></app-form-buku>
+                    <app-form-buku [itemId]="modelId" (afterSave)="showForm(false); "></app-form-buku>
                 </div>
             </div>
         </div>

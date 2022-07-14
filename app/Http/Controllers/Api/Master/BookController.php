@@ -29,6 +29,7 @@ class BookController extends Controller
 
     public function store(CreateRequest $request)
     {
+        // dd($request);
         /**
          * Menampilkan pesan error ketika validasi gagal
          * pengaturan validasi bisa dilihat pada class app/Http/request/User/CreateRequest
@@ -38,6 +39,7 @@ class BookController extends Controller
         }
 
         $dataInput = $request->all();
+        // dd($dataInput);
         $dataItem = $this->book->create($dataInput);
 
         if (!$dataItem['status']) {
@@ -59,7 +61,7 @@ class BookController extends Controller
         // return response()->success(new DetailResource($dataItem));
     }
 
-    public function update(UpdateRequest $request, $id)
+    public function update(UpdateRequest $request)
     {
         /**
          * Menampilkan pesan error ketika validasi gagal
@@ -68,15 +70,15 @@ class BookController extends Controller
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->failed($request->validator->errors(), 422);
         }
-
-        $dataInput = $request->only(['nama', 'deskripsi', 'harga', 'foto', 'is_available', 'kategori', 'detail']);
-        $dataItem = $this->book->update($dataInput, $id);
+        $dataInput = $request->all();
+        // dd($dataInput);
+        $dataItem = $this->book->update($dataInput, $request->id);
 
         if (!$dataItem['status']) {
             return response()->failed($dataItem['error'], 422);
         }
 
-        return response()->success([], 'Data book berhasil diubah');
+        return response()->success($dataItem, 'Data book berhasil diubah');
     }
 
     public function destroy($id)

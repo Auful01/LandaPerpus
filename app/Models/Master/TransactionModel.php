@@ -44,14 +44,8 @@ class TransactionModel extends Model implements ModelInterface
     {
         $query = $this->newQuery();
         $query->with('buku', 'user');
-        // $query->select('*');
-        // $query->from($this->table);
-        // $query->where('deleted_at', null);
-        // $query->orderBy('id', 'desc');
-        // $query->limit($itemPerPage);
-        // $query->offset(($filter['page'] - 1) * $itemPerPage);
-        // $query->get();
-        return $query->paginate($itemPerPage)->appends('sort', $sort);
+
+        return $query->paginate($itemPerPage > 0 ? $itemPerPage : 20)->appends('sort', $sort);
     }
 
     public function getById(int $id): object
@@ -68,8 +62,11 @@ class TransactionModel extends Model implements ModelInterface
         $payload['kode_transaksi'] = rand(1, 99999);
         $payload['tanggal_peminjaman'] = date('Y-m-d');
         $payload['tanggal_pengembalian'] = date('Y-m-d', strtotime('+' . $payload['day'] . ' days'));
-        BookModel::where('id', $payload['id_m_buku'])->decrement('stok', $payload['jumlah']);
-        $data = $this->create($payload);
+        foreach ($payload['buku'] as $key => $value) {
+            $payload['id_m_buku'] = $payload['buku'][$key]['id_m_buku'];
+            BookModel::where('id', $payload['id_m_buku'])->decrement('stok', $payload['jumlah']);
+            $data = $this->create($payload);
+        }
         return $data;
     }
 

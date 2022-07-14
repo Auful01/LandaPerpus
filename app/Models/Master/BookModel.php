@@ -34,7 +34,7 @@ class BookModel extends Model implements ModelInterface
     {
         $query = $this->query();
 
-        return $query->paginate(5)->appends('sort', $sort);
+        return $query->paginate($itemPerPage > 0 ? $itemPerPage : 20)->appends('sort', $sort);
     }
 
     public function getById(int $id): object
@@ -49,6 +49,7 @@ class BookModel extends Model implements ModelInterface
 
     public function edit(array $payload, int $id)
     {
+        // dd('$payload');
         $model = $this->findOrFail($id);
         $model->update($payload);
         return $model;

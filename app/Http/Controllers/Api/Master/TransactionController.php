@@ -32,6 +32,7 @@ class TransactionController extends Controller
 
     public function store(CreateRequest $request)
     {
+        // dd($request->all());
         /**
          * Menampilkan pesan error ketika validasi gagal
          * pengaturan validasi bisa dilihat pada class app/Http/request/Transaction/TransactionRequest
@@ -41,7 +42,8 @@ class TransactionController extends Controller
         }
 
         // $dataInput = $request->only(['nama', 'email', 'is_verified']);
-        $dataInput = $request->only(['id_m_buku', 'id_m_user', 'jumlah', 'status', 'day']);
+        $dataInput = $request->only(['buku', 'id_m_user', 'jumlah', 'status', 'day']);
+        // dd($dataInput);
         // dd($dataInput);
         $dataCust = $this->transaction->create($dataInput);
 
@@ -112,12 +114,14 @@ class TransactionController extends Controller
         try {
             $transaction = TransactionModel::with('buku')->where('id', $request['id'])->first();
             // dd($transaction);
+            $book =  BookModel::where('id', $transaction['id_m_buku'])->first();
             // return $request->id;
-
+            // dd($transaction->jumlah);
             // return $transaction;
             // Book::where('id', $request->id)->update([
             //     'status' => 'tersedia',
             // ]);
+            // dd($book->stok);
 
             $start = Carbon::now();
             $end = new Carbon($transaction->tanggal_pengembalian);
@@ -127,7 +131,7 @@ class TransactionController extends Controller
             if ($diff < 0) {
                 $denda = $diff * 1000;
                 BookModel::where('id', $transaction['id_m_buku'])->update([
-                    'jumlah' => $transaction->jumlah,
+                    'stok' => intval($book->stok) + intval($transaction->jumlah),
                 ]);
                 TransactionModel::where('id_m_buku', $request->id)->update([
                     'tanggal_dikembalikan' => Carbon::now(),
@@ -140,7 +144,7 @@ class TransactionController extends Controller
                 ]);
             } else {
                 BookModel::where('id', $transaction['id_m_buku'])->update([
-                    'jumlah' => $transaction->jumlah,
+                    'stok' => intval($book->stok) + intval($transaction->jumlah),
                 ]);
                 TransactionModel::where('id', $request->id)->update([
                     'tanggal_dikembalikan' => Carbon::now(),

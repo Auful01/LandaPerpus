@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
 
     getBooks() {
         this.bookServ.getBooks([]).subscribe(res => {
-            this.totalBooks = res['data'].length;
+            this.totalBooks = res['data']['meta']['total'];
             console.log(res['data'].length);
         }
             , err => {
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
 
     getTransactions() {
         this.transServ.getTransactions([]).subscribe(res => {
-            this.totalTrans = res['data'].length;
+            this.totalTrans = res['data']['meta']['total'];
             console.log(res['data'].length);
         }
             , err => {

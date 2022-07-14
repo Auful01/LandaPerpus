@@ -14,8 +14,9 @@ export class FormTransactionComponent implements OnInit {
     @Input() itemId: number;
     @Output() afterSave = new EventEmitter<boolean>();
     mode: string;
+    id_buku: number;
     formModel: {
-        id_m_buku: number,
+        buku: any,
         id_m_user: number,
         jumlah: number,
         status: string,
@@ -33,14 +34,7 @@ export class FormTransactionComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.mode = 'add';
-        this.formModel = {
-            id_m_buku: 0,
-            id_m_user: 0,
-            jumlah: 0,
-            status: '',
-            day: 0
-        };
+
 
         this.getUser();
         this.getBuku();
@@ -76,8 +70,19 @@ export class FormTransactionComponent implements OnInit {
     }
 
     emptyForm() {
+        // this.mode = 'add';
         this.mode = 'add';
-
+        this.formModel = {
+            buku: [
+                {
+                    id_m_buku: 1,
+                },
+            ],
+            id_m_user: 0,
+            jumlah: 0,
+            status: '',
+            day: 0
+        };
 
         if (this.itemId > 0) {
             this.mode = 'edit';
@@ -144,8 +149,22 @@ export class FormTransactionComponent implements OnInit {
     }
 
 
-    removeDetail(detail, paramIndex) {
-        detail.splice(paramIndex, 1);
+    removeDetail(paramIndex) {
+        // detail.splice(paramIndex, 1);
+
+    }
+
+    log(param) {
+        console.log(param);
+    }
+
+    addDetail() {
+        const newDet = {
+            id_m_buku: this.id_buku,
+        };
+        console.log(newDet);
+        this.formModel.buku.push(newDet);
+
     }
 
     trackByIndex(index: number): any {

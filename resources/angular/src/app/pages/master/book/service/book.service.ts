@@ -9,7 +9,7 @@ export class BookService {
     constructor(private landaServ: LandaService) { }
 
     getBooks(arrParameter) {
-        return this.landaServ.DataGet('/v1/books', { arrParameter });
+        return this.landaServ.DataGet('/v1/books', arrParameter);
     }
 
     getBookById(bookId) {

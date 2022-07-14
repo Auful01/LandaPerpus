@@ -24,10 +24,11 @@ import { FormBukuComponent } from './book/form-buku/form-buku.component';
 import { FormTransactionComponent } from './transaction/form-transaction/form-transaction.component';
 import { DaftarTransactionComponent } from './transaction/daftar-transaction/daftar-transaction.component';
 import { DaftarTransaksikuComponent } from './transaction/daftar-transaksiku/daftar-transaksiku.component';
+import { DaftarKategoriComponent } from './kategori/daftar-kategori/daftar-kategori.component';
 
 
 @NgModule({
-    declarations: [DaftarUserComponent, FormUserComponent, DaftarRolesComponent, FormRolesComponent, DaftarCustomerComponent, FormCustomerComponent, FormItemComponent, DaftarItemComponent, DaftarBukuComponent, FormBukuComponent, FormTransactionComponent, DaftarTransactionComponent, DaftarTransaksikuComponent],
+    declarations: [DaftarUserComponent, FormUserComponent, DaftarRolesComponent, FormRolesComponent, DaftarCustomerComponent, FormCustomerComponent, FormItemComponent, DaftarItemComponent, DaftarBukuComponent, FormBukuComponent, FormTransactionComponent, DaftarTransactionComponent, DaftarTransaksikuComponent, DaftarKategoriComponent],
     imports: [
         CommonModule,
         MasterRoutingModule,
